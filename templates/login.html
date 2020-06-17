@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {% include "common/head.html" %}
     <title>登录</title>
-    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.0.1/weui.min.css">
-    <!-- #include PathType = "common/head.html" -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="jorba">
-    <meta name="author" content="panpan">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <style type="text/css">
-        .small_size{
-            font-size: small
-        }
-    </style>
+    <!--css文件及配置-->
 </head>
 <body>
-
 <div class="page">
     <form id="form_login" method="post" action="">
         <div class="weui-cells weui-cells_form">
@@ -50,7 +36,8 @@
     </form>
 </div>
 
-<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
+<!--js文件-->
+{% include "common/js.html" %}
 
 </body>
 </html>
