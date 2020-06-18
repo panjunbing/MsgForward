@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--css文件及配置-->
     {% include "common/head.html" %}
     <title>登录</title>
-    <!--css文件及配置-->
 </head>
 <body>
 <div class="page">
@@ -38,6 +38,57 @@
 
 <!--js文件-->
 {% include "common/js.html" %}
+
+<script type="text/javascript">
+    $('#login').on('click',function () {
+        weui.form.validate('#form_login', function (error) {
+            if (!error) {
+                var loading = weui.loading('登录中');
+                setTimeout(function () {
+                    $.ajax({
+                        url: "/login",
+                        type: "post",
+                        data: $('#form_login').serialize(),
+                        async: false,
+                        success: function (data) {
+                            loading.hide();
+                            var result = eval(data);
+                            if(result.result){
+                                weui.toast('登录成功',500);
+                                var userID = result.userID;
+                                setTimeout(function () {
+                                    //获取问题类型
+                                    $.ajax({
+                                        url:"/show",
+                                        async:false,
+                                        success:function (data) {
+                                            var result = eval(data);
+                                            if(result.result){
+                                            }
+                                            else{
+                                                weui.topTips(result.message, 1000);
+                                            }
+                                        }
+                                    });
+                                },500);
+                            }
+                            else{
+                                weui.topTips(result.message, 1000);
+                            }
+                        }
+                    });
+                },500);
+            }
+        }, {
+            regexp: {
+            }
+        });
+    });
+    weui.form.checkIfBlur('#form_login', {
+        regexp: {
+        }
+    });
+</script>
 
 </body>
 </html>

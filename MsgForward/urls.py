@@ -16,8 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from . import views
+from . import login
+from . import show_msg
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.login)
+    url(r'^$', views.login),
+    url(r'^index/', views.index),
+    url(r'^login/', login.login),
+    url(r'^show/', show_msg.show),
 ]
