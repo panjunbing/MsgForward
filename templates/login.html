@@ -53,28 +53,35 @@
                         async: false,
                         success: function (data) {
                             loading.hide();
-                            var result = eval(data);
+                            var result = eval('(' + data + ')');
                             if(result){
                                 weui.toast('登录成功',500);
-<!--                                var userID = result.userID;-->
+                                var user_id = result.user_id;
+                                data = {
+                                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                                    user_id: user_id
+                                 };
                                 setTimeout(function () {
-                                    //获取问题类型
+                                    //跳转主页
                                     $.ajax({
                                         url:"/show/",
+                                        type: "post",
+                                        dataType: "json",
+                                        data: data,
                                         async:false,
                                         success:function (data) {
-                                            var result = eval(data);
-                                            if(result.result){
-                                            }
-                                            else{
-                                                weui.topTips(result.message, 1000);
-                                            }
+                                            <!--var result = eval(data);-->
+                                            <!--if(result.result){-->
+                                            <!--}-->
+                                            <!--else{-->
+                                                <!--weui.topTips(result.message, 1000);-->
+                                            <!--}-->
                                         }
                                     });
                                 },500);
                             }
                             else{
-                                weui.topTips(result.message, 1000);
+                                <!--weui.topTips(result.message, 1000);-->
                             }
                         }
                     });

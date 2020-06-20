@@ -23,7 +23,7 @@ class Msg(models.Model):
 class User(models.Model):
     username = models.CharField(max_length=255)
     passwd = models.CharField(max_length=255)
-    role = models.ForeignKey(Msg, models.DO_NOTHING, db_column='role')
+    role = models.IntegerField()
     objects = models.Manager()
 
     class Meta:
