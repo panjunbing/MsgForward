@@ -1,7 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 
 def show(request):
-    name = request.POST.get('username')
-    passwd = request.POST.get('password')
-    return render(request, 'index.html')
+    return HttpResponse('true')

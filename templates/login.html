@@ -8,6 +8,7 @@
 <body>
 <div class="page">
     <form id="form_login" method="post" action="">
+        {% csrf_token %}
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__hd">
@@ -46,20 +47,20 @@
                 var loading = weui.loading('登录中');
                 setTimeout(function () {
                     $.ajax({
-                        url: "/login",
+                        url: "/login/",
                         type: "post",
                         data: $('#form_login').serialize(),
                         async: false,
                         success: function (data) {
                             loading.hide();
                             var result = eval(data);
-                            if(result.result){
+                            if(result){
                                 weui.toast('登录成功',500);
-                                var userID = result.userID;
+<!--                                var userID = result.userID;-->
                                 setTimeout(function () {
                                     //获取问题类型
                                     $.ajax({
-                                        url:"/show",
+                                        url:"/show/",
                                         async:false,
                                         success:function (data) {
                                             var result = eval(data);
