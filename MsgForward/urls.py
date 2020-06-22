@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from . import views, login, show_msg
+from . import views, login, show_msg, insert_msg
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.login),
     url(r'^index/', views.index),
     url(r'^login/', login.login),
-    url(r'^show/', show_msg.show)
+    url(r'^show/', show_msg.show),
+    url(r'^insert_msg/', insert_msg.insert)
 ]

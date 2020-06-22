@@ -9,11 +9,11 @@
 
 <div class="weui-panel weui-panel_access">
             <div class="weui-panel__hd">验证码</div>
-            {% for i in list_msg %}
+            {% for msg in list_msg %}
             <div class="weui-panel__bd">
                 <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">标题一</h4>
-                    <p class="weui-media-box__desc">{{ forloop.counter0 }}</p>
+                    <h4 class="weui-media-box__title">{{ msg.create_time }}</h4>
+                    <p class="weui-media-box__desc">{{ msg.message }}</p>
                 </div>
             </div>
             {% endfor %}
@@ -21,9 +21,6 @@
 
 <!--js文件-->
 {% include "common/js.html" %}
-
-
-
 
 </body>
 </html>
