@@ -1,4 +1,5 @@
-var SMSRB = global('SMSRB');
+//var SMSRB = global('SMSRB');
+var SMSRB = 'haha'
 data = { msg: SMSRB,
          role: 1,
 };
