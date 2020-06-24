@@ -16,8 +16,9 @@ def login(request):
         # 判断登录
         user = models.User.objects.filter(username=username).first()
         if user is not None:
-            return_item['user_id'] = user.id
             if user.username == username and user.passwd == password:
+                request.session['user_id'] = user.id
+                request.session['is_login'] = True
                 return_item['result'] = 'true'
             else:
                 return_item['result'] = 'false'
@@ -26,5 +27,5 @@ def login(request):
         # json转换
         result = json.dumps(return_item)
         return HttpResponse(result)
-    except:
+    except Exception, e:
         return render(request, 'error.html')

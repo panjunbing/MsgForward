@@ -25,7 +25,7 @@ def index(request):
             # 获取msg信息
             list_msg = []
             for msg in msg_list:
-                dict_msg = {'message': msg.message , 'create_time': msg.create_time}
+                dict_msg = {'message': msg.message , 'create_time': msg.create_time.strftime("%Y-%m-%d %H:%M:%S")}
                 list_msg.append(dict_msg)
 
             # 新建字典
@@ -34,5 +34,5 @@ def index(request):
         else:
             return_item = {'result': 'false'}
             return render(request, 'login_error.html', return_item)
-    except:
+    except Exception, e:
         return render(request, 'error.html')

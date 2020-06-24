@@ -6,21 +6,54 @@
     <title>信息</title>
 </head>
 <body>
-
-<div class="weui-panel weui-panel_access">
-            <div class="weui-panel__hd">验证码</div>
-            {% for msg in list_msg %}
-            <div class="weui-panel__bd">
-                <div class="weui-media-box weui-media-box_text">
-                    <h4 class="weui-media-box__title">{{ msg.create_time }}</h4>
-                    <p class="weui-media-box__desc">{{ msg.message }}</p>
-                </div>
+    <div class="weui-pull-to-refresh__layer">
+    <div class='weui-pull-to-refresh__arrow'></div>
+    <div class='weui-pull-to-refresh__preloader'></div>
+    <div class="down">下拉刷新</div>
+    <div class="up">释放刷新</div>
+    <div class="refresh">正在刷新</div>
+    </div>
+    <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">验证码</div>
+        {% for msg in list_msg %}
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_text">
+                <h4 class="weui-media-box__title">{{ msg.create_time }}</h4>
+                <p class="weui-media-box__desc">{{ msg.message }}</p>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+    </div>
 
 <!--js文件-->
 {% include "common/js.html" %}
+
+<script>
+$(document.body).pullToRefresh(function () {
+    data = {
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+     };
+    setTimeout(function () {
+        $.ajax({
+            url: "/show/",
+            type: "post",
+            data: data,
+            async: false,
+            success: function (data) {
+                var result = eval('(' + data + ')');
+                var i = 1
+                $(document.body).pullToRefreshDone();
+            }
+        });
+    },500);
+
+});
+
+
+
+
+</script>
+
 
 </body>
 </html>
