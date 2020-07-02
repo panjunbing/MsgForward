@@ -15,14 +15,16 @@
     </div>
     <div class="weui-panel weui-panel_access">
         <div class="weui-panel__hd">验证码</div>
-        {% for msg in list_msg %}
-        <div class="weui-panel__bd">
-            <div class="weui-media-box weui-media-box_text">
-                <h4 class="weui-media-box__title">{{ msg.create_time }}</h4>
-                <p class="weui-media-box__desc">{{ msg.message }}</p>
+        <div id="msg">
+            {% for msg in list_msg %}
+            <div class="weui-panel__bd">
+                <div class="weui-media-box weui-media-box_text">
+                    <h4 class="weui-media-box__title" id=create_time{{ forloop.counter0 }} >{{ msg.create_time }}</h4>
+                    <p class="weui-media-box__desc"  id=message{{ forloop.counter0 }}>{{ msg.message }}</p>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
 <!--js文件-->
@@ -41,8 +43,17 @@ $(document.body).pullToRefresh(function () {
             async: false,
             success: function (data) {
                 var result = eval('(' + data + ')');
-                var i = 1
-                $(document.body).pullToRefreshDone();
+                if (result.result == 'true'){
+                    for(var i = 0;i<result.list_msg.length;i++){
+                        $('#create_time'+i).html(result.list_msg[i].create_time)
+                        $('#message'+i).html(result.list_msg[i].message)
+                    }
+                    $.toast("刷新成功");
+                    $(document.body).pullToRefreshDone();
+                }
+                else{
+                    $.toast("刷新失败");
+                }
             }
         });
     },500);

@@ -1,11 +1,11 @@
-//var SMSRB = global('SMSRB');
-var SMSRB = 'haha'
+var SMSRB = global('SMSRB');
 data = { msg: SMSRB,
          role: 1,
+         key: fFk^fkU$2521Fk3&f223YhGHh
 };
 
 $.ajax({
-    url:"http://192.168.1.104:8000/insert_msg/",
+    url:"http://101.201.238.141:28080/insert_msg/",
     async: false,
     data: data,
     type: 'post',

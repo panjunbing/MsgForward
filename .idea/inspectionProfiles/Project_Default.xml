@@ -4,9 +4,11 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="2">
+          <list size="4">
             <item index="0" class="java.lang.String" itemvalue="emptytips" />
             <item index="1" class="java.lang.String" itemvalue="notmatchtips" />
+            <item index="2" class="java.lang.String" itemvalue="forloop.counter0" />
+            <item index="3" class="java.lang.String" itemvalue="}}" />
           </list>
         </value>
       </option>
@@ -34,6 +36,13 @@
           <option value="W292" />
           <option value="E722" />
           <option value="E302" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N801" />
         </list>
       </option>
     </inspection_tool>

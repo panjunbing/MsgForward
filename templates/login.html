@@ -30,6 +30,16 @@
                 </div>
                 <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
             </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">操作内容</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" id="auth_msg" name="auth_msg" type="text" maxlength="18" required
+                           placeholder="输入您本次操作的内容" emptytips="请输入操作内容">
+                </div>
+                <div class="weui-cell__ft"><i class="weui-icon-warn"></i></div>
+            </div>
         </div>
         <div class="weui-btn-area">
             <a id="login" type="submit" href="javascript:" class="weui-btn weui-btn_primary">登录</a>
@@ -39,9 +49,13 @@
 
 <!--js文件-->
 {% include "common/js.html" %}
+<!--md5-->
+<script src="/static/js/md5.js"></script>
 
 <script type="text/javascript">
     $('#login').on('click',function () {
+        var password =  $('#password');
+        password.val($.md5(password.val()));
         weui.form.validate('#form_login', function (error) {
             if (!error) {
                 var loading = weui.loading('登录中');

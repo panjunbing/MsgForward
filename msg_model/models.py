@@ -140,3 +140,13 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = 'user'
+
+class Auth(models.Model):
+    objects = models.Manager()
+    user_id = models.IntegerField()
+    auth_msg = models.CharField(max_length=255)
+    create_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth'

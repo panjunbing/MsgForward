@@ -18,7 +18,7 @@ from django.contrib import admin
 from . import views, login, show_msg, insert_msg
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
     url(r'^$', views.login),
     url(r'^index/', views.index),
     url(r'^login/', login.login),

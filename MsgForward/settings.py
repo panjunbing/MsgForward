@@ -24,6 +24,7 @@ SECRET_KEY = ')kj_z7%m875=45l3w@zj!=60@lmrd_0b=%9h93!b&s668hw$pv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -76,10 +77,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'msgforward',
-        'HOST': '101.201.238.141',
+        'HOST': '127.0.0.1',
         'PORT': 3306,
         'USER': 'root',
-        'PASSWORD': 'Xtyj%^(3016',
+        'PASSWORD': '1234',
     }
 }
 
