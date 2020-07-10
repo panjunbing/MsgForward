@@ -12,10 +12,11 @@ function posthttp(url, data) {
 }
 
 //发送消息(文本)
-var SMSRB = global('SMSRB');
-var data = JSON.stringify({
-    "msg": "haha",
-    "role": "1",
-});
-var send = "http://192.168.1.104:8000/insert_msg/";
+//var SMSRB = global('SMSRB');
+//var data = JSON.stringify({
+//    "msg": "haha",
+//    "role": "1",
+//});
+var data = "msg=haha;role=1"
+var send = "http://127.0.0.1:8000/insert_msg/";
 posthttp(send, data);

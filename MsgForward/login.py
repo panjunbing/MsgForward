@@ -8,10 +8,9 @@ import json
 
 
 def login(request):
+    # 新建字典
+    return_item = {}
     try:
-        # 新建字典
-        return_item = {}
-
         # 获取账号
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -20,10 +19,9 @@ def login(request):
         # 获取操作内容
         auth_msg = request.POST.get('auth_msg')
         create_time = timezone.now()
-        auth = Auth(auth_msg=auth_msg, user_id=user.id, create_time=create_time)
-
         # 判断登录
         if user is not None:
+            auth = Auth(auth_msg=auth_msg, user_id=user.id, create_time=create_time)
             if user.username == username and user.passwd == password:
                 request.session['user_id'] = user.id
                 request.session['is_login'] = True
@@ -33,10 +31,16 @@ def login(request):
                 auth.auth_msg = 'login fail'
                 auth.save()
                 return_item['result'] = 'false'
+                return_item['error'] = "用户名或密码错误"
         else:
             return_item['result'] = 'false'
+            return_item['error'] = "用户名或密码错误"
         # json转换
         result = json.dumps(return_item)
         return HttpResponse(result)
     except Exception, e:
-        return render(request, 'error.html')
+        return_item['result'] = 'false'
+        return_item['error'] = e
+        # json转换
+        result = json.dumps(return_item)
+        return HttpResponse(result)
