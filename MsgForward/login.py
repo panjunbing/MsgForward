@@ -30,17 +30,14 @@ def login(request):
             else:
                 auth.auth_msg = 'login fail'
                 auth.save()
-                return_item['result'] = 'false'
-                return_item['error'] = "用户名或密码错误"
+                return_item = {'result': 'false', 'error': '用户名或密码错误'}
         else:
-            return_item['result'] = 'false'
-            return_item['error'] = "用户名或密码错误"
+            return_item = {'result': 'false', 'error': '用户名或密码错误'}
         # json转换
         result = json.dumps(return_item)
         return HttpResponse(result)
     except Exception, e:
-        return_item['result'] = 'false'
-        return_item['error'] = e
+        return_item = {'result': 'false', 'error': e}
         # json转换
         result = json.dumps(return_item)
         return HttpResponse(result)

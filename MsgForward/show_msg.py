@@ -7,6 +7,8 @@ from msg_model import models
 
 
 def show(request):
+    # 新建字典
+    return_item = {}
     try:
         # 获取登录状态
         is_login = request.session.get('is_login')
@@ -24,11 +26,11 @@ def show(request):
                 dict_msg = {'message': msg.message, 'create_time': msg.create_time.strftime("%Y-%m-%d %H:%M:%S")}
                 list_msg.append(dict_msg)
 
-            # 新建字典
             return_item = {'list_msg': list_msg, 'result': 'true'}
             return HttpResponse(json.dumps(return_item))
         else:
-            return_item = {'result': 'false'}
-            return render(request, 'login_error.html')
+            return_item = {'result': 'false', 'error': '用户未登录'}
+            return HttpResponse(json.dumps(return_item))
     except Exception, e:
-        return render(request, 'error.html')
+        return_item = {'result': 'false', 'error': e}
+        return HttpResponse(json.dumps(return_item))

@@ -37,10 +37,10 @@ $(document.body).pullToRefresh(function () {
      };
     setTimeout(function () {
         $.ajax({
-            url: "/show/",
+            url: "/show_msg/",
             type: "post",
             data: data,
-            async: false,
+            async: true,
             success: function (data) {
                 var result = eval('(' + data + ')');
                 if (result.result == 'true'){
@@ -52,7 +52,7 @@ $(document.body).pullToRefresh(function () {
                     $(document.body).pullToRefreshDone();
                 }
                 else{
-                    $.toast("刷新失败");
+                    $.toast(result.e);
                 }
             }
         });

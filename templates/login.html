@@ -58,7 +58,7 @@
         password.val($.md5(password.val()));
         weui.form.validate('#form_login', function (error) {
             if (!error) {
-                var loading = weui.loading('登录中');
+                $.showLoading('登陆中');
                 setTimeout(function () {
                     $.ajax({
                         url: "/login/",
@@ -66,7 +66,6 @@
                         data: $('#form_login').serialize(),
                         async: true,
                         success: function (data) {
-                            loading.hide();
                             var result = eval('(' + data + ')');
                             if(result.result == 'true'){
                                 $.toast('登录成功',1000);
@@ -82,7 +81,7 @@
                             }
                         }
                     });
-                },500);
+                },300);
             }
         }, {
             regexp: {

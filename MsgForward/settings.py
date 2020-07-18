@@ -76,11 +76,11 @@ WSGI_APPLICATION = 'MsgForward.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'msgforward',
-        'HOST': '101.201.238.141',
-        'PORT': 3306,
-        'USER': 'root',
-        'PASSWORD': 'Xtyj%^(3016',
+        'NAME': ' ',
+        'HOST': ' ',
+        'PORT': ' ',
+        'USER': ' ',
+        'PASSWORD': ' ',
     }
 }
 
