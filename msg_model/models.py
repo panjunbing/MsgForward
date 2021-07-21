@@ -2,12 +2,20 @@
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey has `on_delete` set to the desired behavior.
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
-from __future__ import unicode_literals
-
 from django.db import models
+
+
+class Auth(models.Model):
+    user = models.ForeignKey('User', models.DO_NOTHING)
+    auth_msg = models.CharField(max_length=255)
+    create_time = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth'
 
 
 class AuthGroup(models.Model):
@@ -80,7 +88,7 @@ class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
     object_repr = models.CharField(max_length=200)
-    action_flag = models.SmallIntegerField()
+    action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
     content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
@@ -123,7 +131,7 @@ class DjangoSession(models.Model):
 class Msg(models.Model):
     objects = models.Manager()
     message = models.CharField(max_length=255)
-    role = models.IntegerField()
+    role = models.ForeignKey('Role', models.DO_NOTHING, db_column='role')
     create_time = models.DateTimeField()
 
     class Meta:
@@ -131,22 +139,21 @@ class Msg(models.Model):
         db_table = 'msg'
 
 
+class Role(models.Model):
+    objects = models.Manager()
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'role'
+
+
 class User(models.Model):
     objects = models.Manager()
     username = models.CharField(max_length=255)
     passwd = models.CharField(max_length=255)
-    role = models.IntegerField()
+    role = models.ForeignKey(Role, models.DO_NOTHING, db_column='role')
 
     class Meta:
         managed = False
         db_table = 'user'
-
-class Auth(models.Model):
-    objects = models.Manager()
-    user_id = models.IntegerField()
-    auth_msg = models.CharField(max_length=255)
-    create_time = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth'

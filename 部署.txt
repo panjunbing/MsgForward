@@ -1,0 +1,131 @@
+pip:
+1.安装
+yum install python3-pip -y
+yum install python3-devel -y
+-------------------------------------------------
+
+django:
+1.安装
+pip3 install django
+pip3 install pymysql
+pip3 install cryptography
+2.上传py文件
+
+4.关闭调试模式
+sed -i 's/DEBUG = True/DEBUG = False/g' /data/MsgForward/MsgForward/settings.py
+cat /data/MsgForward/MsgForward/settings.py | grep 'DEBUG'
+5.测试运行
+python3 manage.py runserver 0.0.0.0:8000
+
+-------------------------------------------------
+
+uwsgi:
+1.安装
+pip3 install uwsgi
+
+2.配置
+vi /data/MsgForward/uwsgi28081.ini
+[uwsgi]
+# http = 101.201.238.141:28081
+# socket = 106.53.70.169:28081
+socket = 172.16.0.4:28081
+chdir = /data/MsgForward
+wsgi-file= MsgForward/wsgi.py
+
+master = true
+processes=4
+threads=2
+
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+
+3.启动
+uwsgi --ini /data/MsgForward/uwsgi28081.ini
+
+curl http://172.16.0.4:28081
+-------------------------------------------------
+
+nginx:
+1.安装
+yum install nginx -y
+
+2.配置
+vi /etc/nginx/nginx.conf
+
+添加在server中
+    upstream django {
+        server 172.16.0.4:28081;
+    }
+
+    location / {
+            include  uwsgi_params;
+            uwsgi_pass  django;
+    }
+
+    location /static {
+            expires 30d;
+            autoindex on;
+            add_header Cache-Control private;
+            alias //data/MsgForward/statics/;
+    }
+
+
+include  uwsgi_params;
+uwsgi_pass  django;
+
+
+3.启动
+
+-------------------------------------------------
+
+mysql:
+1.安装mysql
+wget https://cdn.mysql.com/archives/mysql-8.0/mysql-8.0.25-1.el7.x86_64.rpm-bundle.tar
+tar -zxvf mysql-8.0.25-1.el7.x86_64.rpm-bundle.tar.gz
+curl https://repo.mysql.com//mysql80-community-release-el7-3.noarch.rpm > centos7.mysql.rpm
+yum install centos7.mysql.rpm -y
+yum install mysql-community-server-8.0.25-1.el7.x86_64.rpm
+2.初始化及开机自启动
+systemctl start mysqld
+systemctl enable mysqld
+3.查看临时密码
+cat /var/log/mysqld.log | grep "password"
+4.输入临时密码并初始化
+mysql_secure_installation
+5.登录
+mysql -u root -p
+6.远程登录
+update user set host='%' where user='root';
+flush privileges;
+7.开机自启动
+cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+chmod +x /etc/init.d/mysqld
+systemctl enable mysqld
+
+-------------------------------------------------
+重启应用
+killall uwsgi
+uwsgi --ini /data/MsgForward/uwsgi28081.ini & systemctl restart nginx
+验证
+curl http://106.53.70.169:28080
+-------------------------------------------------
+js代码
+javascripts
+
+var SMSRB = global('SMSRB');
+data = { msg: SMSRB,
+    role: 1,
+    key: "fFkfkU$2521Fk3&f223YhGHh"
+};
+
+$.ajax({
+    url:"http://106.53.70.169:28080/insert_msg/",
+    async: false,
+    data: data,
+    type: 'post',
+    success:function (data) {
+        flash(data)
+    }
+});
+
+库填写https://zeptojs.com/zepto.min.js

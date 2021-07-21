@@ -18,8 +18,9 @@ def login(request):
 
         # 获取操作内容
         auth_msg = request.POST.get('auth_msg')
+        # 获取当前时间
         create_time = timezone.now()
-        # 判断登录
+        # 判断登录是否成功
         if user is not None:
             auth = Auth(auth_msg=auth_msg, user_id=user.id, create_time=create_time)
             if user.username == username and user.passwd == password:
@@ -30,14 +31,17 @@ def login(request):
             else:
                 auth.auth_msg = 'login fail'
                 auth.save()
-                return_item = {'result': 'false', 'error': '用户名或密码错误'}
+                return_item['result'] = 'false'
+                return_item['error'] = "用户名或密码错误"
         else:
-            return_item = {'result': 'false', 'error': '用户名或密码错误'}
+            return_item['result'] = 'false'
+            return_item['error'] = "用户名或密码错误"
         # json转换
         result = json.dumps(return_item)
         return HttpResponse(result)
-    except Exception, e:
-        return_item = {'result': 'false', 'error': e}
+    except Exception as e:
+        return_item['result'] = 'false'
+        return_item['error'] = e
         # json转换
         result = json.dumps(return_item)
         return HttpResponse(result)
